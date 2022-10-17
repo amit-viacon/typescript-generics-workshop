@@ -1,6 +1,13 @@
 import { expect, it } from "vitest";
 
-const createClassNamesFactory = (param: unknown) => {};
+const createClassNamesFactory = <K extends string>(
+  param: Record<K, string>
+) => {
+  return (property: K, ...classes: string[]) => {
+    const allClasses = [param[property], ...classes];
+    return allClasses.join(" ");
+  };
+};
 
 const getBg = createClassNamesFactory({
   primary: "bg-blue-500",
@@ -14,7 +21,7 @@ it("Should let you create classes from a className factory", () => {
 
 it("Should let you pass additional classes which get appended", () => {
   expect(getBg("primary", "text-white", "rounded", "p-4")).toEqual(
-    "bg-blue-500 text-white rounded p-4",
+    "bg-blue-500 text-white rounded p-4"
   );
 });
 

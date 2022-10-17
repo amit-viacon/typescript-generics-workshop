@@ -19,12 +19,22 @@ const appConfig = {
   },
 };
 
-export const getFeatureFlags = (
-  config: unknown,
-  override: (flags: unknown) => unknown
-) => {};
+type TBaseConfig<HomeFlags> = {
+  rawConfig: {
+    featureFlags: {
+      homePage: HomeFlags;
+    };
+  };
+};
 
-it("Should return the homePage flag object", () => {
+export const getFeatureFlags = <TFlags>(
+  config: TBaseConfig<TFlags>,
+  override: (flags: TFlags) => TFlags
+) => {
+  return override(config.rawConfig.featureFlags.homePage);
+};
+
+it.only("Should return the homePage flag object", () => {
   const flags = getFeatureFlags(appConfig, (flags) => flags);
 
   expect(flags).toEqual({
