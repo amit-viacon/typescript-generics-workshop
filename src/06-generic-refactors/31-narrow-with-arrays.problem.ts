@@ -1,4 +1,4 @@
-// import { F } from 'ts-toolbelt';
+import { F } from "ts-toolbelt";
 import { Equal, Expect } from "../helpers/type-utils";
 
 interface Fruit {
@@ -6,12 +6,14 @@ interface Fruit {
   price: number;
 }
 
-export const wrapFruit = <TFruit extends Fruit>(fruits: TFruit[]) => {
-  const getFruit = <TName extends TFruit["name"]>(
-    name: TName,
-  ): Extract<TFruit, { name: TName }> => {
+export const wrapFruit = <TFruits extends Fruit[]>(
+  fruits: F.Narrow<TFruits>
+) => {
+  const getFruit = <TName extends TFruits[number]["name"]>(
+    name: TName
+  ): Extract<TFruits[number], { name: TName }> => {
     return fruits.find((fruit) => fruit.name === name) as Extract<
-      TFruit,
+      TFruits[number],
       { name: TName }
     >;
   };
@@ -39,5 +41,5 @@ const notAllowed = fruits.getFruit("not-allowed");
 
 type tests = [
   Expect<Equal<typeof apple, { name: "apple"; price: 1 }>>,
-  Expect<Equal<typeof banana, { name: "banana"; price: 2 }>>,
+  Expect<Equal<typeof banana, { name: "banana"; price: 2 }>>
 ];

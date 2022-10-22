@@ -1,16 +1,16 @@
-// import { F } from "ts-toolbelt";
+import { F } from "ts-toolbelt";
 
 /**
  * Clue - F.NoInfer is part of the solution
  */
 
 interface Config<TState extends string> {
-  initial: TState;
+  initial: F.NoInfer<TState>;
   states: Record<TState, {}>;
 }
 
 export const makeStateMachine = <TState extends string>(
-  config: Config<TState>,
+  config: Config<TState>
 ) => {};
 
 makeStateMachine({

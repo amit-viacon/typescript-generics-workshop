@@ -5,10 +5,9 @@ import { Equal, Expect } from "../helpers/type-utils";
  * The function we made earlier could be refactored
  * to use only ONE generic.
  */
-const returnBothOfWhatIPassIn = <T1, T2>(params: {
-  a: T1;
-  b: T2;
-}): [T1, T2] => {
+const returnBothOfWhatIPassIn = <T extends { a: unknown; b: unknown }>(
+  params: T
+): [T["a"], T["b"]] => {
   return [params.a, params.b];
 };
 
